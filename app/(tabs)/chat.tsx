@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Tab() {
+export default function Chat() {
   return (
     <View style={styles.container}>
       <Text>Tab Chat</Text>
