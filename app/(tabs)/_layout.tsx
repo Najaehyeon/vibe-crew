@@ -1,14 +1,19 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
   return (
     <Tabs
       screenOptions={{ 
         tabBarActiveTintColor: 'blue',
         headerShown: false,
         tabBarStyle: {
-          height: 50,
+          height: 60 + insets.bottom,
+          paddingBottom: insets.bottom,
+          paddingTop: 8,
+          backgroundColor: 'white',
         }
       }}
     >
@@ -17,7 +22,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarLabel: "",
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={32} name="home" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -25,7 +30,7 @@ export default function TabLayout() {
         options={{
           title: 'Chat',
           tabBarLabel: "",
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="comment" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="comment-o" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -33,7 +38,7 @@ export default function TabLayout() {
         options={{
           title: 'Bookmarks',
           tabBarLabel: "",
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="bookmark" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="bookmark-o" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -41,7 +46,7 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarLabel: "",
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="user-o" color={color} />,
         }}
       />
     </Tabs>
