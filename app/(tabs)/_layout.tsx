@@ -4,10 +4,25 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
+  const activeColor = '#960FFF'; // Define the active color once
+
+  // Helper component to handle icon selection based on focus/active state
+  function TabBarIcon({ name, focused, color, size }) {
+    let iconName = name;
+    
+    if (focused) {
+      if (name === 'comment-o') iconName = 'comment';
+      else if (name === 'bookmark-o') iconName = 'bookmark';
+      else if (name === 'user-o') iconName = 'user';
+    }
+    
+    return <FontAwesome size={size} name={iconName} color={color} />;
+  }
+  
   return (
     <Tabs
       screenOptions={{ 
-        tabBarActiveTintColor: 'blue',
+        tabBarActiveTintColor: activeColor,
         headerShown: false,
         tabBarStyle: {
           height: 60 + insets.bottom,
@@ -22,7 +37,9 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarLabel: "",
-          tabBarIcon: ({ color }) => <FontAwesome size={32} name="home" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="home" focused={focused} color={color} size={32} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -30,7 +47,9 @@ export default function TabLayout() {
         options={{
           title: 'Chat',
           tabBarLabel: "",
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="comment-o" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="comment-o" focused={focused} color={color} size={28} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -38,7 +57,9 @@ export default function TabLayout() {
         options={{
           title: 'Bookmarks',
           tabBarLabel: "",
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="bookmark-o" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="bookmark-o" focused={focused} color={color} size={28} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -46,7 +67,9 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarLabel: "",
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="user-o" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="user-o" focused={focused} color={color} size={28} />
+          ),
         }}
       />
     </Tabs>
