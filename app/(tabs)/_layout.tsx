@@ -1,12 +1,11 @@
+import { COLORS } from '@/constants/theme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
-  const activeColor = '#960FFF'; // Define the active color once
 
-  // Helper component to handle icon selection based on focus/active state
   function TabBarIcon({ name, focused, color, size }) {
     let iconName = name;
     
@@ -21,8 +20,8 @@ export default function TabLayout() {
   
   return (
     <Tabs
-      screenOptions={{ 
-        tabBarActiveTintColor: activeColor,
+      screenOptions={{    
+        tabBarActiveTintColor: COLORS.primary,
         headerShown: false,
         tabBarStyle: {
           height: 60 + insets.bottom,
@@ -33,7 +32,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="(home)"
         options={{
           title: 'Home',
           tabBarLabel: "",

@@ -73,7 +73,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   dates: {
-    width: "100%",
+    flex: 1,
     height: 80,
     marginLeft: 82,
   },
@@ -102,5 +102,44 @@ export const styles = StyleSheet.create({
   },
   todayDateText: {
     color: COLORS.white,
+  },
+  post: {
+    flex: 1,
+    flexDirection: "row",
+    height: 120,
+    marginTop: 12,
+    marginHorizontal: 12,
+    backgroundColor: COLORS.white,
+    borderRadius: 20,
+    elevation: 1,
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    alignItems: 'center',
+    paddingRight: 12,
+  },
+  postImg: {
+    width: 96,
+    height: 96,
+    margin: 12,
+    borderRadius: 10,
+    flexShrink: 0,
+  },
+  postContent: {
+    flex: 1,
+    paddingVertical: 12,
+    justifyContent: 'space-between',
+    height: '100%',
+  },
+  postTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 4,
+  },
+  postCondition: {
+    flexDirection: "row",
+  },
+  postConditionText: {
+    fontSize: 10,
+    marginLeft: 4,
   }
 });
