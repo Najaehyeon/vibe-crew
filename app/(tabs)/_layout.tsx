@@ -1,21 +1,15 @@
 import { COLORS } from '@/constants/theme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Octicons from '@expo/vector-icons/Octicons';
 import { Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
 
-  function TabBarIcon({ name, focused, color, size }) {
-    let iconName = name;
-    
-    if (focused) {
-      if (name === 'comment-o') iconName = 'comment';
-      else if (name === 'bookmark-o') iconName = 'bookmark';
-      else if (name === 'user-o') iconName = 'user';
-    }
-    
-    return <FontAwesome size={size} name={iconName} color={color} />;
+  function TabBarIcon({ focused, color }) {
+    return <FontAwesome color={color} />;
   }
   
   return (
@@ -36,9 +30,10 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarLabel: "",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="home" focused={focused} color={color} size={32} />
-          ),
+          tabBarIcon: ({ color, focused }) => {
+            if (!focused) return <Octicons name="home" focused={focused} color={color} size={24} />
+            else return <Octicons name="home-fill" focused={focused} color={color} size={24} />
+          },
         }}
       />
       <Tabs.Screen
@@ -46,9 +41,10 @@ export default function TabLayout() {
         options={{
           title: 'Chat',
           tabBarLabel: "",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="comment-o" focused={focused} color={color} size={28} />
-          ),
+          tabBarIcon: ({ color, focused }) => {
+            if (!focused) return <Ionicons name="chatbubble-ellipses-outline" size={24} color={color} />
+            else return <Ionicons name="chatbubble-ellipses" size={24} color={color} />
+          },
         }}
       />
       <Tabs.Screen
@@ -56,9 +52,10 @@ export default function TabLayout() {
         options={{
           title: 'Bookmarks',
           tabBarLabel: "",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="bookmark-o" focused={focused} color={color} size={28} />
-          ),
+          tabBarIcon: ({ color, focused }) => {
+            if (!focused) return <FontAwesome name="heart-o" size={24} color={color} />
+            else return <FontAwesome name="heart" size={24} color={color} />
+          },
         }}
       />
       <Tabs.Screen
@@ -66,9 +63,10 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarLabel: "",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="user-o" focused={focused} color={color} size={28} />
-          ),
+          tabBarIcon: ({ color, focused }) => {
+            if (!focused) return <FontAwesome name="user-o" focused={focused} color={color} size={24} />
+            else return <FontAwesome name="user" focused={focused} color={color} size={24} />
+          },
         }}
       />
     </Tabs>

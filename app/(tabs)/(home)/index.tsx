@@ -134,11 +134,11 @@ export default function Home() {
       {/* 게시물 리스트 */}
       <ScrollView>
         {
-          posts.map((post, index) => (
-            <TouchableOpacity style={styles.post} activeOpacity={0.8} key={index}>
+          posts.map((post) => (
+            <TouchableOpacity style={styles.post} activeOpacity={0.8} key={post.id}>
               <Image
                 style={styles.postImg}
-                source="https://picsum.photos/seed/696/3000/2000"
+                source={post.image}
                 contentFit="cover"
               />
               <View style={styles.postContent}>
