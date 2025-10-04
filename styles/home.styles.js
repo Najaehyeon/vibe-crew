@@ -126,7 +126,7 @@ export const styles = StyleSheet.create({
   },
   postContent: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: 16,
     justifyContent: 'space-between',
     height: '100%',
   },
@@ -138,8 +138,13 @@ export const styles = StyleSheet.create({
   postCondition: {
     flexDirection: "row",
   },
+  postConditionTitle: {
+    fontSize: 11,
+    marginLeft: 4,
+    color: COLORS.grey,
+  },
   postConditionText: {
-    fontSize: 10,
+    fontSize: 11,
     marginLeft: 4,
   }
 });

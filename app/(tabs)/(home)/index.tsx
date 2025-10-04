@@ -1,6 +1,8 @@
 import { styles } from '@/styles/home.styles';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { createClient } from '@supabase/supabase-js';
 import { Image } from 'expo-image';
+import { useEffect, useState } from 'react';
 import { ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -27,9 +29,26 @@ const generateDates = () => {
 };
 
 export default function Home() {
-
+  const supabase = createClient('https://kkzhsaqigwpuzgvszvuz.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtremhzYXFpZ3dwdXpndnN6dnV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1NTE4NTMsImV4cCI6MjA3NTEyNzg1M30.2_EvGzGXY9dPZrvh4hphWdMYv2miSs0oEBgY8-TVnJQ');
   const insets = useSafeAreaInsets();
   const datesData = generateDates();
+
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const getPosts = async () => {
+      const { data, error } = await supabase
+        .from('posts')
+        .select();
+      
+      if (error) {
+        console.error(error);
+        return;
+      }
+      setPosts(data || []);
+    }
+    getPosts();
+  }, [])
 
   return (
     <View style={[styles.container, {paddingTop: insets.top + 12}]}>
@@ -114,142 +133,45 @@ export default function Home() {
 
       {/* 게시물 리스트 */}
       <ScrollView>
-        <View style={styles.post}>
-          <Image
-            style={styles.postImg}
-            source="https://picsum.photos/seed/696/3000/2000"
-            contentFit="cover"
-          />
-          <View style={styles.postContent}>
-            <Text
-              style={styles.postTitle}
-              numberOfLines={2}
-              ellipsizeMode="tail"
-            >
-            한강에서 치맥할 사람 구합니다~~~
-            </Text>
-            <View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>일시</Text>
-                <Text style={styles.postConditionText}>9.11(일) 12:00</Text>
+        {
+          posts.map((post, index) => (
+            <TouchableOpacity style={styles.post} activeOpacity={0.8} key={index}>
+              <Image
+                style={styles.postImg}
+                source="https://picsum.photos/seed/696/3000/2000"
+                contentFit="cover"
+              />
+              <View style={styles.postContent}>
+                <Text
+                  style={styles.postTitle}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                {post.title}
+                </Text>
+                <View>
+                  <View style={styles.postCondition}>
+                    <Text style={styles.postConditionTitle}>일시</Text>
+                    <Text style={styles.postConditionText}>{post.date}</Text>
+                  </View>
+                  <View style={styles.postCondition}>
+                    <Text style={styles.postConditionTitle}>위치</Text>
+                    <Text style={styles.postConditionText}>{post.location}</Text>
+                  </View>
+                  <View style={styles.postCondition}>
+                    <Text style={styles.postConditionTitle}>나이</Text>
+                    <Text style={styles.postConditionText}>{post.age}</Text>
+                  </View>
+                  <View style={styles.postCondition}>
+                    <Text style={styles.postConditionTitle}>인원</Text>
+                    <Text style={styles.postConditionText}>{post.headcount}</Text>
+                  </View>
+                </View>
               </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>위치</Text>
-                <Text style={styles.postConditionText}>한강(여의도역 5번 출구 앞)</Text>
-              </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>나이</Text>
-                <Text style={styles.postConditionText}>97년생 ~ 04년생</Text>
-              </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>인원</Text>
-                <Text style={styles.postConditionText}>남자 3/4 | 여자 3/4 참여중</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View style={styles.post}>
-          <Image
-            style={styles.postImg}
-            source="https://picsum.photos/seed/696/3000/2000"
-            contentFit="cover"
-          />
-          <View style={styles.postContent}>
-            <Text
-              style={styles.postTitle}
-              numberOfLines={2}
-              ellipsizeMode="tail"
-            >
-            한강에서 치맥할 사람 구합니다~~~
-            </Text>
-            <View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>일시</Text>
-                <Text style={styles.postConditionText}>9.11(일) 12:00</Text>
-              </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>위치</Text>
-                <Text style={styles.postConditionText}>한강(여의도역 5번 출구 앞)</Text>
-              </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>나이</Text>
-                <Text style={styles.postConditionText}>97년생 ~ 04년생</Text>
-              </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>인원</Text>
-                <Text style={styles.postConditionText}>남자 3/4 | 여자 3/4 참여중</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View style={styles.post}>
-          <Image
-            style={styles.postImg}
-            source="https://picsum.photos/seed/696/3000/2000"
-            contentFit="cover"
-          />
-          <View style={styles.postContent}>
-            <Text
-              style={styles.postTitle}
-              numberOfLines={2}
-              ellipsizeMode="tail"
-            >
-            한강에서 치맥할 사람 구합니다~~~
-            </Text>
-            <View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>일시</Text>
-                <Text style={styles.postConditionText}>9.11(일) 12:00</Text>
-              </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>위치</Text>
-                <Text style={styles.postConditionText}>한강(여의도역 5번 출구 앞)</Text>
-              </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>나이</Text>
-                <Text style={styles.postConditionText}>97년생 ~ 04년생</Text>
-              </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>인원</Text>
-                <Text style={styles.postConditionText}>남자 3/4 | 여자 3/4 참여중</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View style={styles.post}>
-          <Image
-            style={styles.postImg}
-            source="https://picsum.photos/seed/696/3000/2000"
-            contentFit="cover"
-          />
-          <View style={styles.postContent}>
-            <Text
-              style={styles.postTitle}
-              numberOfLines={2}
-              ellipsizeMode="tail"
-            >
-            한강에서 치맥할 사람 구합니다~~~
-            </Text>
-            <View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>일시</Text>
-                <Text style={styles.postConditionText}>9.11(일) 12:00</Text>
-              </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>위치</Text>
-                <Text style={styles.postConditionText}>한강(여의도역 5번 출구 앞)</Text>
-              </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>나이</Text>
-                <Text style={styles.postConditionText}>97년생 ~ 04년생</Text>
-              </View>
-              <View style={styles.postCondition}>
-                <Text style={styles.postConditionText}>인원</Text>
-                <Text style={styles.postConditionText}>남자 3/4 | 여자 3/4 참여중</Text>
-              </View>
-            </View>
-          </View>
-        </View>
+            </TouchableOpacity>
+          ))
+        }
+        
       </ScrollView>
     </View>
   );
