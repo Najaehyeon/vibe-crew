@@ -3,6 +3,7 @@ import { styles } from '@/styles/home.styles';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import { createClient } from '@supabase/supabase-js';
+import { Checkbox } from 'expo-checkbox';
 import { Image } from 'expo-image';
 import { useEffect, useState } from 'react';
 import { ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
@@ -37,6 +38,9 @@ export default function Home() {
   const navigation = useNavigation();
 
   const [posts, setPosts] = useState([]);
+  const [filterAgeClicked, setFilterAgeClicked] = useState(false);
+  const [filterLocationClicked, setFilterLocationClicked] = useState(false);
+  const [filterHeadcountClicked, setFilterHeadcountClicked] = useState(false);
 
   useEffect(() => {
     const getPosts = async () => {
@@ -72,21 +76,42 @@ export default function Home() {
       <View style={styles.filterContainer}>
         <View style={styles.filterMenu}>
           <Text style={styles.filterMenuText}>나이</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {setFilterAgeClicked(!filterAgeClicked)}}>
             <FontAwesome name='angle-down' size={24}/>
           </TouchableOpacity>
+            { filterAgeClicked
+              ? <View style={styles.filterContent}>
+                  <Text style={{fontWeight: 500}}>내 나이 적용</Text>
+                  <Checkbox></Checkbox>
+                </View>
+              : null
+            }
         </View>
         <View style={styles.filterMenu}>
           <Text style={styles.filterMenuText}>지역</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setFilterLocationClicked(!filterLocationClicked)}>
             <FontAwesome name='angle-down' size={24}/>
           </TouchableOpacity>
+            { filterLocationClicked
+                ? <View style={styles.filterContent}>
+                    <Text style={{fontWeight: 500}}>내 나이 적용</Text>
+                    <Checkbox></Checkbox>
+                  </View>
+                : null
+            }
         </View>
         <View style={styles.filterMenu}>
           <Text style={styles.filterMenuText}>인원</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setFilterHeadcountClicked(!filterHeadcountClicked)}>
             <FontAwesome name='angle-down' size={24}/>
           </TouchableOpacity>
+            { filterHeadcountClicked
+                ? <View style={styles.filterContent}>
+                    <Text style={{fontWeight: 500}}>내 나이 적용</Text>
+                    <Checkbox></Checkbox>
+                  </View>
+                : null
+            }
         </View>
       </View>
 
