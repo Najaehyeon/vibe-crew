@@ -1,6 +1,7 @@
 import { COLORS } from '@/constants/theme';
 import { styles } from '@/styles/home.styles';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
 import { createClient } from '@supabase/supabase-js';
 import { Image } from 'expo-image';
 import { useEffect, useState } from 'react';
@@ -33,6 +34,7 @@ export default function Home() {
   const supabase = createClient('https://kkzhsaqigwpuzgvszvuz.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtremhzYXFpZ3dwdXpndnN6dnV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1NTE4NTMsImV4cCI6MjA3NTEyNzg1M30.2_EvGzGXY9dPZrvh4hphWdMYv2miSs0oEBgY8-TVnJQ');
   const insets = useSafeAreaInsets();
   const datesData = generateDates();
+  const navigation = useNavigation();
 
   const [posts, setPosts] = useState([]);
 
@@ -61,7 +63,7 @@ export default function Home() {
       {/* 헤드 */}
       <View style={styles.header}> 
         <Text style={styles.title}>미팅하자</Text>
-        <TouchableOpacity style={styles.alarmButton}>
+        <TouchableOpacity style={styles.alarmButton} onPress={() => navigation.navigate('notice')}>
           <FontAwesome name='bell-o' size={24} />
         </TouchableOpacity>
       </View>
