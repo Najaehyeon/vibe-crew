@@ -1,3 +1,4 @@
+import { COLORS } from '@/constants/theme';
 import { styles } from '@/styles/home.styles';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { createClient } from '@supabase/supabase-js';
@@ -136,6 +137,9 @@ export default function Home() {
         {
           posts.map((post) => (
             <TouchableOpacity style={styles.post} activeOpacity={0.8} key={post.id}>
+              <TouchableOpacity style={styles.postLike}>
+                <FontAwesome name='heart-o' size={20} color={COLORS.white}/>
+              </TouchableOpacity>
               <Image
                 style={styles.postImg}
                 source={post.image}

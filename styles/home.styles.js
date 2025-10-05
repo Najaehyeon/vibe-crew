@@ -117,6 +117,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingRight: 12,
   },
+  postLike: {
+    position: "absolute",
+    top: 20,
+    left: 20,
+    zIndex: 1,
+  },
   postImg: {
     width: 96,
     height: 96,
