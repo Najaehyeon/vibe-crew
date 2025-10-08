@@ -16,6 +16,15 @@ export default function RootLayout() {
               } 
             }}
           />
+          <Stack.Screen
+            name="post"
+            options={{
+              headerTitle: "게시물 작성",
+              headerStyle: {
+                backgroundColor: COLORS.background,
+              } 
+            }}
+          />
         </Stack>
     </SafeAreaProvider>
   );

@@ -1,5 +1,6 @@
 import { COLORS } from '@/constants/theme';
 import { styles } from '@/styles/home.styles';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import { createClient } from '@supabase/supabase-js';
@@ -202,8 +203,12 @@ export default function Home() {
             </TouchableOpacity>
           ))
         }
-        
       </ScrollView>
+
+      {/* FAB */}
+      <TouchableOpacity style={styles.FAB} activeOpacity={0.7} onPress={() => navigation.navigate('post')}>
+        <AntDesign name='plus' size={24} color={COLORS.white}/>
+      </TouchableOpacity>
     </View>
   );
 }

@@ -165,5 +165,16 @@ export const styles = StyleSheet.create({
   postConditionText: {
     fontSize: 11,
     marginLeft: 4,
-  }
+  },
+  FAB: {
+    position: 'fixed',
+    left: "76%",
+    bottom: "3%",
+    width: 64,
+    height: 64,
+    backgroundColor: COLORS.primary,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 });
