@@ -32,6 +32,36 @@ const generateDates = () => {
   return datesArray;
 };
 
+const formatPostDate = (isoDateString) => {
+  if (!isoDateString) return "";
+
+  const date = new Date(isoDateString);
+
+  const dateOptions = {
+    month: '2-digit',
+    day: '2-digit',
+    weekday: 'short',
+    timeZone: 'Asia/Seoul'
+  };
+
+  const datePart = date.toLocaleDateString('ko-KR', dateOptions);
+
+  const timeOptions = {
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+    timeZone: 'Asia/Seoul'
+  }
+
+  let timePart = date.toLocaleTimeString('ko-KR', timeOptions);
+
+  const parts = datePart.replace(/\s+/g, '').replace(/\./g, '/').split('/');
+  const monthDay = parts[0] + '/' + parts[1];
+  const weekday = parts[2] ? `${parts[2].replace(/[요일]/, '일')}` : '';
+
+  return `${monthDay}${weekday} ${timePart}`;
+}
+
 export default function Home() {
   const supabase = createClient('https://kkzhsaqigwpuzgvszvuz.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtremhzYXFpZ3dwdXpndnN6dnV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1NTE4NTMsImV4cCI6MjA3NTEyNzg1M30.2_EvGzGXY9dPZrvh4hphWdMYv2miSs0oEBgY8-TVnJQ');
   const insets = useSafeAreaInsets();
@@ -82,7 +112,7 @@ export default function Home() {
           </TouchableOpacity>
             { filterAgeClicked
               ? <View style={styles.filterContent}>
-                  <Text style={{fontWeight: 500}}>내 나이 적용</Text>
+                  <Text style={{fontWeight: 500}}>내 나이</Text>
                   <Checkbox></Checkbox>
                 </View>
               : null
@@ -95,7 +125,7 @@ export default function Home() {
           </TouchableOpacity>
             { filterLocationClicked
                 ? <View style={styles.filterContent}>
-                    <Text style={{fontWeight: 500}}>내 나이 적용</Text>
+                    <Text style={{fontWeight: 500}}>내 동네</Text>
                     <Checkbox></Checkbox>
                   </View>
                 : null
@@ -108,7 +138,7 @@ export default function Home() {
           </TouchableOpacity>
             { filterHeadcountClicked
                 ? <View style={styles.filterContent}>
-                    <Text style={{fontWeight: 500}}>내 나이 적용</Text>
+                    <Text style={{fontWeight: 500}}>N명</Text>
                     <Checkbox></Checkbox>
                   </View>
                 : null
@@ -161,7 +191,7 @@ export default function Home() {
       </View>
 
       {/* 게시물 리스트 */}
-      <ScrollView>
+      <ScrollView style={{flex: 1}}>
         {
           posts.map((post) => (
             <TouchableOpacity style={styles.post} activeOpacity={0.8} key={post.id}>
@@ -184,7 +214,7 @@ export default function Home() {
                 <View>
                   <View style={styles.postCondition}>
                     <Text style={styles.postConditionTitle}>일시</Text>
-                    <Text style={styles.postConditionText}>{post.date}</Text>
+                    <Text style={styles.postConditionText}>{formatPostDate(post.date)}</Text>
                   </View>
                   <View style={styles.postCondition}>
                     <Text style={styles.postConditionTitle}>위치</Text>
