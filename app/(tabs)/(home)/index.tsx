@@ -2,6 +2,7 @@ import { COLORS } from '@/constants/theme';
 import { styles } from '@/styles/home.styles';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { createClient } from '@supabase/supabase-js';
 import { Checkbox } from 'expo-checkbox';
@@ -108,8 +109,11 @@ export default function Home() {
       />
 
       {/* 헤드 */}
-      <View style={styles.header}> 
-        <Text style={styles.title}>미팅하자</Text>
+      <View style={styles.header}>
+        <View style={{flexDirection: "row"}}>
+          <MaterialCommunityIcons name="fruit-grapes" size={48} color={COLORS.primary} style={{transform: [{rotate: '54deg'}]}} />
+          <Text style={styles.title}>PODO</Text>
+        </View>
         <TouchableOpacity style={styles.alarmButton} onPress={() => navigation.navigate('notice')}>
           <FontAwesome name='bell-o' size={24} />
         </TouchableOpacity>

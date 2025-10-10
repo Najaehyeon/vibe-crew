@@ -2,18 +2,26 @@ import { COLORS } from '@/constants/theme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Octicons from '@expo/vector-icons/Octicons';
+import * as Haptics from 'expo-haptics'; // 👈 Haptics 라이브러리 임포트
 import { Tabs } from 'expo-router';
+import { useCallback } from 'react'; // 👈 useCallback 임포트
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
 
-  function TabBarIcon({ focused, color }) {
-    return <FontAwesome color={color} />;
-  }
+  const triggerHapticFeedback = useCallback(() => {
+    // Light 진동 효과를 사용합니다. 필요에 따라 다른 효과(Medium, Heavy)로 변경 가능합니다.
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+  }, []);
   
   return (
     <Tabs
+      screenListeners={{
+        tabPress: () => {
+          triggerHapticFeedback();
+        },
+      }}
       screenOptions={{    
         tabBarActiveTintColor: COLORS.primary,
         headerShown: false,
@@ -22,7 +30,7 @@ export default function TabLayout() {
           paddingBottom: insets.bottom,
           paddingTop: 8,
           backgroundColor: 'white',
-        }
+        },
       }}
     >
       <Tabs.Screen

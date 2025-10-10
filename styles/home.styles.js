@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: 24,
+    marginHorizontal: 12,
   },
   title: {
     fontSize: 32,
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     zIndex: 1,
   },
   filterContainer: {
-    marginTop: 24,
+    marginTop: 12,
     marginHorizontal: 24,
     backgroundColor: COLORS.white,
     borderRadius: 100,
@@ -67,14 +67,14 @@ export const styles = StyleSheet.create({
   filterContentList: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: 4,
+    marginVertical: 2,
   },
   filterContentText: {
     fontWeight: 500,
     marginRight: 8,
   },
   dateContainer: {
-    marginTop: 24,
+    marginTop: 12,
     backgroundColor: COLORS.white,
     flexDirection: "row",
     height: 80,
