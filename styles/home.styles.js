@@ -36,6 +36,7 @@ export const styles = StyleSheet.create({
   },
   filterMenu: {
     flexDirection: "row",
+    alignItems: 'center',
   },
   filterMenuText: {
     fontSize: 18,
@@ -43,17 +44,24 @@ export const styles = StyleSheet.create({
     marginRight: 4,
   },
   filterContent:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     position: 'absolute',
-    width: 80,
+    zIndex: 2,
+    width: 'auto',
     top: 30,
-    right: -20,
     backgroundColor: COLORS.white,
     padding: 8,
     borderWidth: 1,
     borderColor: COLORS.darkGrey,
     borderRadius: 10,
+  },
+  filterContentList: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 4,
+  },
+  filterContentText: {
+    fontWeight: 500,
+    marginRight: 8,
   },
   dateContainer: {
     marginTop: 24,

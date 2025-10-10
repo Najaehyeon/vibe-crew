@@ -25,6 +25,15 @@ export default function RootLayout() {
               } 
             }}
           />
+          <Stack.Screen
+            name="location"
+            options={{
+              headerTitle: "지역 설정",
+              headerStyle: {
+                backgroundColor: COLORS.background,
+              } 
+            }}
+          />
         </Stack>
     </SafeAreaProvider>
   );

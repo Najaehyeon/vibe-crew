@@ -70,15 +70,27 @@ export default function Home() {
 
   const [posts, setPosts] = useState([]);
   const [filterAgeClicked, setFilterAgeClicked] = useState(false);
-  const [filterLocationClicked, setFilterLocationClicked] = useState(false);
   const [filterHeadcountClicked, setFilterHeadcountClicked] = useState(false);
+  const [filterByMyAge, setFilterByMyAge] = useState(false);
+
+  const CURRENT_USER_BIRTH_YEAR = 2000;
 
   useEffect(() => {
     const getPosts = async () => {
-      const { data, error } = await supabase
+      let query = await supabase
         .from('posts')
         .select();
       
+      if (filterByMyAge) {
+        query = await supabase
+          .from('posts')
+          .select()
+          .lte('max_age', CURRENT_USER_BIRTH_YEAR)
+          .gte('min_age', CURRENT_USER_BIRTH_YEAR);
+      }
+
+      const { data, error } = await query;
+
       if (error) {
         console.error(error);
         return;
@@ -86,7 +98,7 @@ export default function Home() {
       setPosts(data || []);
     }
     getPosts();
-  }, [])
+  }, [filterByMyAge])
 
   return (
     <View style={[styles.container, {paddingTop: insets.top + 12}]}>
@@ -110,26 +122,20 @@ export default function Home() {
           <TouchableOpacity onPress={() => {setFilterAgeClicked(!filterAgeClicked)}}>
             <FontAwesome name='angle-down' size={24}/>
           </TouchableOpacity>
-            { filterAgeClicked
-              ? <View style={styles.filterContent}>
-                  <Text style={{fontWeight: 500}}>내 나이</Text>
-                  <Checkbox></Checkbox>
+          { filterAgeClicked
+            ? <View style={styles.filterContent}>
+                <View style={styles.filterContentList}>
+                  <Text style={styles.filterContentText}>내 나이</Text>
+                  <Checkbox
+                    value={filterByMyAge}
+                    onValueChange={(newValue) => {
+                      setFilterByMyAge(newValue)
+                    }}
+                  />
                 </View>
-              : null
-            }
-        </View>
-        <View style={styles.filterMenu}>
-          <Text style={styles.filterMenuText}>지역</Text>
-          <TouchableOpacity onPress={() => setFilterLocationClicked(!filterLocationClicked)}>
-            <FontAwesome name='angle-down' size={24}/>
-          </TouchableOpacity>
-            { filterLocationClicked
-                ? <View style={styles.filterContent}>
-                    <Text style={{fontWeight: 500}}>내 동네</Text>
-                    <Checkbox></Checkbox>
-                  </View>
-                : null
-            }
+              </View>
+            : null
+          }
         </View>
         <View style={styles.filterMenu}>
           <Text style={styles.filterMenuText}>인원</Text>
@@ -138,11 +144,55 @@ export default function Home() {
           </TouchableOpacity>
             { filterHeadcountClicked
                 ? <View style={styles.filterContent}>
-                    <Text style={{fontWeight: 500}}>N명</Text>
-                    <Checkbox></Checkbox>
+                    <View style={styles.filterContentList}>
+                      <Text style={styles.filterContentText}>2명</Text>
+                      <Checkbox></Checkbox>
+                    </View>
+                    <View style={styles.filterContentList}>
+                      <Text style={styles.filterContentText}>4명</Text>
+                      <Checkbox></Checkbox>
+                    </View>
+                    <View style={styles.filterContentList}>
+                      <Text style={styles.filterContentText}>6명</Text>
+                      <Checkbox></Checkbox>
+                    </View>
+                    <View style={styles.filterContentList}>
+                      <Text style={styles.filterContentText}>8명</Text>
+                      <Checkbox></Checkbox>
+                    </View>
+                    <View style={styles.filterContentList}>
+                      <Text style={styles.filterContentText}>10명</Text>
+                      <Checkbox></Checkbox>
+                    </View>
+                    <View style={styles.filterContentList}>
+                      <Text style={styles.filterContentText}>12명</Text>
+                      <Checkbox></Checkbox>
+                    </View>
+                    <View style={styles.filterContentList}>
+                      <Text style={styles.filterContentText}>14명</Text>
+                      <Checkbox></Checkbox>
+                    </View>
+                    <View style={styles.filterContentList}>
+                      <Text style={styles.filterContentText}>16명</Text>
+                      <Checkbox></Checkbox>
+                    </View>
+                    <View style={styles.filterContentList}>
+                      <Text style={styles.filterContentText}>18명</Text>
+                      <Checkbox></Checkbox>
+                    </View>
+                    <View style={styles.filterContentList}>
+                      <Text style={styles.filterContentText}>20명</Text>
+                      <Checkbox></Checkbox>
+                    </View>
                   </View>
                 : null
             }
+        </View>
+        <View style={styles.filterMenu}>
+          <Text style={styles.filterMenuText}>지역</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('location')}>
+            <AntDesign name='arrow-right' size={16}/>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -222,7 +272,9 @@ export default function Home() {
                   </View>
                   <View style={styles.postCondition}>
                     <Text style={styles.postConditionTitle}>나이</Text>
-                    <Text style={styles.postConditionText}>{post.age}</Text>
+                    <Text style={styles.postConditionText}>
+                      {`${String(post.max_age).slice(-2)}년생~${String(post.min_age).slice(-2)}년생`}
+                    </Text>
                   </View>
                   <View style={styles.postCondition}>
                     <Text style={styles.postConditionTitle}>인원</Text>
