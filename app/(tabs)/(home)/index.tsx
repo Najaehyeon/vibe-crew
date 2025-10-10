@@ -115,11 +115,27 @@ export default function Home() {
         </TouchableOpacity>
       </View>
 
+      { (filterAgeClicked || filterHeadcountClicked) && (
+        <TouchableOpacity
+          style={styles.hideAllFilter}
+          activeOpacity={1} // 터치 시 시각적 피드백 없음
+          onPress={() => {
+            // 열려있는 모든 필터 닫기
+            setFilterAgeClicked(false);
+            setFilterHeadcountClicked(false);
+          }}
+        />
+      )}
+
       {/* 필터 메뉴 */}
       <View style={styles.filterContainer}>
         <View style={styles.filterMenu}>
           <Text style={styles.filterMenuText}>나이</Text>
-          <TouchableOpacity onPress={() => {setFilterAgeClicked(!filterAgeClicked)}}>
+          <TouchableOpacity onPress={() => {
+            setFilterAgeClicked(!filterAgeClicked)
+            setFilterHeadcountClicked(false);
+            }}
+          >
             <FontAwesome name='angle-down' size={24}/>
           </TouchableOpacity>
           { filterAgeClicked
@@ -139,7 +155,11 @@ export default function Home() {
         </View>
         <View style={styles.filterMenu}>
           <Text style={styles.filterMenuText}>인원</Text>
-          <TouchableOpacity onPress={() => setFilterHeadcountClicked(!filterHeadcountClicked)}>
+          <TouchableOpacity onPress={() => {
+            setFilterHeadcountClicked(!filterHeadcountClicked);
+            setFilterAgeClicked(false);
+          }}
+          >
             <FontAwesome name='angle-down' size={24}/>
           </TouchableOpacity>
             { filterHeadcountClicked
@@ -198,7 +218,7 @@ export default function Home() {
 
       {/* 날짜 */}
       <View style={styles.dateContainer}>
-        <TouchableOpacity style={styles.showAllDateButton}>
+        <TouchableOpacity style={styles.showAllDateButton} activeOpacity={0.4}>
           <Text style={styles.showAllDateButtonText}>전체</Text>
         </TouchableOpacity>
         <ScrollView
@@ -210,7 +230,7 @@ export default function Home() {
         >
           {
             datesData.map((item, index) => (
-              <TouchableOpacity key={index}>
+              <TouchableOpacity activeOpacity={0.6} key={index}>
                 <View
                   style={[
                     styles.dateItem,

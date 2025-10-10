@@ -24,6 +24,14 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  hideAllFilter: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+  },
   filterContainer: {
     marginTop: 24,
     marginHorizontal: 24,
@@ -33,6 +41,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     height: 64,
+    zIndex: 2,
   },
   filterMenu: {
     flexDirection: "row",
@@ -45,11 +54,12 @@ export const styles = StyleSheet.create({
   },
   filterContent:{
     position: 'absolute',
-    zIndex: 2,
+    zIndex: 3,
     width: 'auto',
     top: 30,
     backgroundColor: COLORS.white,
-    padding: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     borderWidth: 1,
     borderColor: COLORS.darkGrey,
     borderRadius: 10,
