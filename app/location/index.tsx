@@ -1,10 +1,10 @@
 import { COLORS } from "@/constants/theme";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Notice() {
+export default function Location() {
     return (
         <View style={styles.container}>
-            <Text style={styles.defaultText}>게시물 작성 페이지.</Text>
+            <Text style={styles.defaultText}>지역 설정 페이지</Text>
         </View>
     )
 }
