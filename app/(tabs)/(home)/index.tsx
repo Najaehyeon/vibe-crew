@@ -73,21 +73,30 @@ export default function Home() {
   const [filterAgeClicked, setFilterAgeClicked] = useState(false);
   const [filterHeadcountClicked, setFilterHeadcountClicked] = useState(false);
   const [filterByMyAge, setFilterByMyAge] = useState(false);
+  const [filterByHeadcount, setFilterByHeadCount] = useState([0]);
 
   const CURRENT_USER_BIRTH_YEAR = 2000;
+  const headcounts = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
 
   useEffect(() => {
     const getPosts = async () => {
-      let query = await supabase
+      let query = supabase
         .from('posts')
         .select();
       
       if (filterByMyAge) {
-        query = await supabase
-          .from('posts')
-          .select()
+        query = query
           .lte('max_age', CURRENT_USER_BIRTH_YEAR)
           .gte('min_age', CURRENT_USER_BIRTH_YEAR);
+      }
+
+      const selectedHeadcounts = filterByHeadcount.filter(count => count !== 0);
+
+      if (filterByHeadcount.length > 1) {
+        const maxBoyCounts = selectedHeadcounts.map(number => number / 2);
+
+        query = query
+          .in('boy_count_max', maxBoyCounts);
       }
 
       const { data, error } = await query;
@@ -99,7 +108,7 @@ export default function Home() {
       setPosts(data || []);
     }
     getPosts();
-  }, [filterByMyAge])
+  }, [filterByMyAge, filterByHeadcount])
 
   return (
     <View style={[styles.container, {paddingTop: insets.top + 12}]}>
@@ -166,49 +175,27 @@ export default function Home() {
           >
             <FontAwesome name='angle-down' size={24}/>
           </TouchableOpacity>
+          
             { filterHeadcountClicked
                 ? <View style={styles.filterContent}>
-                    <View style={styles.filterContentList}>
-                      <Text style={styles.filterContentText}>2명</Text>
-                      <Checkbox></Checkbox>
-                    </View>
-                    <View style={styles.filterContentList}>
-                      <Text style={styles.filterContentText}>4명</Text>
-                      <Checkbox></Checkbox>
-                    </View>
-                    <View style={styles.filterContentList}>
-                      <Text style={styles.filterContentText}>6명</Text>
-                      <Checkbox></Checkbox>
-                    </View>
-                    <View style={styles.filterContentList}>
-                      <Text style={styles.filterContentText}>8명</Text>
-                      <Checkbox></Checkbox>
-                    </View>
-                    <View style={styles.filterContentList}>
-                      <Text style={styles.filterContentText}>10명</Text>
-                      <Checkbox></Checkbox>
-                    </View>
-                    <View style={styles.filterContentList}>
-                      <Text style={styles.filterContentText}>12명</Text>
-                      <Checkbox></Checkbox>
-                    </View>
-                    <View style={styles.filterContentList}>
-                      <Text style={styles.filterContentText}>14명</Text>
-                      <Checkbox></Checkbox>
-                    </View>
-                    <View style={styles.filterContentList}>
-                      <Text style={styles.filterContentText}>16명</Text>
-                      <Checkbox></Checkbox>
-                    </View>
-                    <View style={styles.filterContentList}>
-                      <Text style={styles.filterContentText}>18명</Text>
-                      <Checkbox></Checkbox>
-                    </View>
-                    <View style={styles.filterContentList}>
-                      <Text style={styles.filterContentText}>20명</Text>
-                      <Checkbox></Checkbox>
-                    </View>
-                  </View>
+                    {headcounts.map((item, index) => (
+                      <View style={styles.filterContentList} key={index}>
+                        <Text style={styles.filterContentText}>{item}명</Text>
+                        <Checkbox
+                          value={filterByHeadcount.includes(item)}
+                          onValueChange={(newValue) => {
+                              setFilterByHeadCount(prevCounts => {
+                                if (newValue) {
+                                  return [...prevCounts, item];
+                                } else {
+                                  return prevCounts.filter(count => count !== item);
+                                }
+                              })
+                          }}
+                        />
+                      </View>
+                ))}
+                </View>
                 : null
             }
         </View>
@@ -302,7 +289,7 @@ export default function Home() {
                   </View>
                   <View style={styles.postCondition}>
                     <Text style={styles.postConditionTitle}>인원</Text>
-                    <Text style={styles.postConditionText}>{post.headcount}</Text>
+                    <Text style={styles.postConditionText}>{`남자 ${post.boy_count}/${post.boy_count_max} | 여자 ${post.girl_count}/${post.girl_count_max} 참여중`}</Text>
                   </View>
                 </View>
               </View>
